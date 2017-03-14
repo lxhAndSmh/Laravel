@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_best"
+            android:icon="@mipmap/ic_main_recommend"
+            android:title="精华"
+            android:checked="true"
+            ></item>
+
+        <item
+            android:id="@+id/drawer_vote"
+            android:icon="@mipmap/ic_main_hot"
+            android:title="投票"></item>
+
+        <item
+            android:id="@+id/drawer_newest"
+            android:icon="@mipmap/ic_main_newest"
+            android:title="最近"></item>
+
+        <item
+            android:id="@+id/drawer_nobody"
+            android:icon="@mipmap/ic_main_nobody"
+            android:title="零回复"></item>
+
+        <item
+            android:id="@+id/drawer_work"
+            android:icon="@mipmap/ic_main_work"
+            android:title="酷工作"></item>
+
+        <item
+            android:id="@+id/drawer_wiki"
+            android:icon="@mipmap/ic_main_wiki"
+            android:title="社区WIKI"></item>
+
+
+        <item
+            android:id="@+id/drawer_theme"
+            android:icon="@mipmap/ic_main_palette"
+            android:title="切换主题"></item>
+
+        <item
+            android:id="@+id/drawer_help"
+            android:icon="@mipmap/ic_help"
+            android:title="登录帮助"></item>
+    </group>
+
+</menu>
