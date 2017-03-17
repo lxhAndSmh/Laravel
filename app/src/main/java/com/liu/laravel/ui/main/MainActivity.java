@@ -23,6 +23,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private final static String TAG = MainActivity.class.getSimpleName();
+
     private RelativeLayout rlUser;
     private TextView tvName;
     private TextView tvEmail;

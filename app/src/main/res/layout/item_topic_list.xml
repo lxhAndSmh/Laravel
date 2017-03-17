@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/space_8"
+    android:layout_marginRight="@dimen/space_8"
+    android:layout_marginTop="@dimen/space_8"
+    android:clickable="true"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/space_4"
+    app:cardElevation="@dimen/line_0_5">
+
+    <RelativeLayout
+        android:id="@+id/bgaRl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/space_8"
+        android:background="@android:color/white">
+
+        <android.support.v4.widget.CircleImageView
+            android:id="@+id/user_img_iv"
+            android:layout_width="@dimen/space_50"
+            android:layout_height="@dimen/space_50"
+            android:layout_marginRight="@dimen/space_8"
+            app:backgroundImage="@color/main_bg"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_50"
+            android:paddingLeft="@dimen/space_8"
+            android:paddingRight="@dimen/space_24"
+            android:layout_toEndOf="@id/user_img_iv"
+            android:layout_toRightOf="@id/user_img_iv"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/content_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/text_common"
+                android:textSize="@dimen/textSize_13"
+                tools:text="SegmentFault 访谈《我的编程之路》：" />
+
+            <TextView
+                android:id="@+id/content_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="bottom|end"
+                android:textColor="@color/text_content"
+                android:textSize="@dimen/textSize_10"
+                tools:text="其他 最后由 G军仔 1天前" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/content_number_tv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/tv_round"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text=""
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/textSize_11"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+

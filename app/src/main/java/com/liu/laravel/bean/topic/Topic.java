@@ -47,7 +47,7 @@ public class Topic extends BaseModel {
     @SerializedName("last_reply_user")
     private LastReplyUser lastReplyUser;
 
-    private CategoryList.Category category;
+    private Category category;
 
     public int getId() {
         return id;
@@ -161,11 +161,11 @@ public class Topic extends BaseModel {
         this.lastReplyUser = lastReplyUser;
     }
 
-    public CategoryList.Category getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryList.Category category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -204,4 +204,19 @@ public class Topic extends BaseModel {
         }
 
     }
+
+    public static class Category extends BaseModel {
+
+        private CategoryList.Category data;
+
+        public CategoryList.Category getData() {
+            return data;
+        }
+
+        public void setData(CategoryList.Category data) {
+            this.data = data;
+        }
+
+    }
+
 }
