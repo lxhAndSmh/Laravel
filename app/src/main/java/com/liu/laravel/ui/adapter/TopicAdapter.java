@@ -1,5 +1,6 @@
 package com.liu.laravel.ui.adapter;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,15 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicViewHoder> {
             stringBuilder.append(" * ").append(topic.getUpdatedAt());
         }
 
+        String avaterUrl = topic.getUser().getData().getAvatar();
 
+        holder.title.setText(topic.getTitle());
+        holder.time.setText(stringBuilder.toString());
+        holder.number.setText(mCommentCount);
+
+        Uri uri = Uri.parse(avaterUrl);
+
+        holder.avater.setImageURI(uri);
     }
 
     @Override

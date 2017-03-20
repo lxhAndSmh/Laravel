@@ -3,6 +3,8 @@ package com.liu.laravel.ui.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liu.laravel.R;
+import com.liu.laravel.ui.topic.list.TopicListFragment;
 import com.liu.laravel.util.ToastUtils;
 
 import butterknife.BindView;
@@ -64,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initData(){
+
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        TopicListFragment topicListFragment = new TopicListFragment();
+        transaction.add(R.id.container, topicListFragment);
+        transaction.commit();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

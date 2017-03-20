@@ -1,5 +1,6 @@
 package com.liu.laravel.ui.topic.list;
 
+import com.liu.laravel.bean.Token;
 import com.liu.laravel.bean.topic.TopicList;
 import com.liu.laravel.common.BaseDataManager;
 import com.liu.laravel.common.BasePresenter;
@@ -20,6 +21,8 @@ import rx.Observable;
 public interface TopicListContact {
 
     interface DataManager extends BaseDataManager {
+
+        Observable<Token> getTokenByForum();
 
         Observable<TopicList> getTopicListByForum(String type, int pageIndex);
     }

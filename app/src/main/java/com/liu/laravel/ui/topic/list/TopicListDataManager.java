@@ -1,8 +1,10 @@
 package com.liu.laravel.ui.topic.list;
 
+import com.liu.laravel.BuildConfig;
 import com.liu.laravel.api.ApiHttpClient;
+import com.liu.laravel.bean.Token;
 import com.liu.laravel.bean.topic.TopicList;
-import com.liu.laravel.global.Contants;
+import com.liu.laravel.global.Constants;
 import com.liu.laravel.util.RxSchedulers;
 
 import java.util.HashMap;
@@ -23,6 +25,16 @@ import rx.Observable;
 public class TopicListDataManager implements TopicListContact.DataManager {
 
     @Override
+    public Observable<Token> getTokenByForum() {
+        return ApiHttpClient.getInstance()
+                .getTokenApi()
+                .getToken(Constants.Token.AUTH_TYPE_GUEST,
+                        BuildConfig.CLIENT_ID,
+                        BuildConfig.CLIENT_SECRET)
+                .compose(RxSchedulers.<Token>io_main());
+    }
+
+    @Override
     public Observable<TopicList> getTopicListByForum(String type, int pageIndex) {
         return ApiHttpClient.getInstance()
                 .getTopicApi()
@@ -30,10 +42,10 @@ public class TopicListDataManager implements TopicListContact.DataManager {
                 .compose(RxSchedulers.<TopicList>io_main());
     }
 
-    private Map<String, String> getOptionByforum(String  type, int pageIndex){
+    private Map<String, String> getOptionByforum(String type, int pageIndex) {
         Map<String, String> options = new HashMap<>();
         options.put("include", "category,user,node,last_reply_user");
-        options.put("per_page", Contants.PAGE_NUMBER);
+        options.put("per_page", Constants.PAGE_NUMBER);
         options.put("filters", type);
         options.put("page", String.valueOf(pageIndex));
         options.put("columns", "user(signature)");

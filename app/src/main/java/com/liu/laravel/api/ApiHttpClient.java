@@ -1,5 +1,7 @@
 package com.liu.laravel.api;
 
+import android.text.TextUtils;
+
 import com.liu.laravel.BuildConfig;
 import com.orhanobut.logger.Logger;
 
@@ -34,6 +36,18 @@ public class ApiHttpClient {
 
     private static TopicApi topicApi;
 
+    private static TokenApi tokenApi;
+
+    private static String mToken = "";
+
+    public static String getmToken() {
+        return mToken;
+    }
+
+    public static void setmToken(String mToken) {
+        ApiHttpClient.mToken = mToken;
+    }
+
     private static ApiHttpClient mHttpClient;
 
     public static ApiHttpClient getInstance(){
@@ -41,6 +55,10 @@ public class ApiHttpClient {
             mHttpClient = new ApiHttpClient();
         }
         return mHttpClient;
+    }
+
+    public TokenApi getTokenApi(){
+        return tokenApi == null ? configRetrofit(TokenApi.class, true) : tokenApi;
     }
 
     public TopicApi getTopicApi(){
@@ -80,6 +98,9 @@ public class ApiHttpClient {
                 }else {
                     builder.addHeader("Accept", "application/vnd.OralMaster.v1+json");
                 }
+                if (!TextUtils.isEmpty(mToken)) {
+                    builder.addHeader("Authorization", "Bearer " + mToken);
+                }
 
                 Request request = builder.build();
                 return chain.proceed(request);
@@ -99,7 +120,7 @@ public class ApiHttpClient {
                     Buffer buffer = source.buffer();
                     Charset UTF8 = Charset.forName("UTF-8");
 
-                    Logger.json(buffer.clone().readString(UTF8));
+                    Logger.d("REQUEST_JSON", buffer.clone().readString(UTF8));
                     Logger.d("REQUEST_URL", request.url());
                     return response;
                 }

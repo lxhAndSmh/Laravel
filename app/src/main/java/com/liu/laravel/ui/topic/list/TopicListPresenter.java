@@ -1,9 +1,18 @@
 package com.liu.laravel.ui.topic.list;
 
-import com.liu.laravel.bean.topic.TopicList;
+import android.text.TextUtils;
 
+import com.liu.laravel.api.ApiHttpClient;
+import com.liu.laravel.bean.Token;
+import com.liu.laravel.bean.topic.TopicList;
+import com.orhanobut.logger.Logger;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * 项目名称：Laravel
@@ -27,9 +36,40 @@ public class TopicListPresenter implements TopicListContact.Presenter {
     }
 
     @Override
-    public void getTopicListByForm(String type, final int pageIndex) {
+    public void getTopicListByForm(final String type, final int pageIndex) {
 
-        mDataManager.getTopicListByForum(type, pageIndex)
+        Observable.just(null)
+                .flatMap(new Func1<Object, Observable<TopicList>>() {
+                    @Override
+                    public Observable<TopicList> call(Object o) {
+                        return TextUtils.isEmpty(ApiHttpClient.getmToken())
+                                ? Observable.<TopicList>error(new NullPointerException("Token is null"))
+                                : mDataManager.getTopicListByForum(type, pageIndex);
+                    }
+                })
+                .retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+                    @Override
+                    public Observable<?> call(Observable<? extends Throwable> observable) {
+                        return observable.flatMap(new Func1<Throwable, Observable<?>>() {
+                            @Override
+                            public Observable<?> call(Throwable throwable) {
+                                if(throwable instanceof NullPointerException || throwable instanceof IllegalArgumentException){
+                                    return mDataManager.getTokenByForum()
+                                            .doOnNext(new Action1<Token>() {
+                                                @Override
+                                                public void call(Token token) {
+                                                    ApiHttpClient.setmToken(token.getAccess_token());
+                                                    Logger.d("Token===", token.getAccess_token());
+                                                }
+                                            });
+                                }
+                                return Observable.just(throwable);
+                            }
+                        });
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<TopicList>() {
                                @Override
                                public void call(TopicList topicList) {

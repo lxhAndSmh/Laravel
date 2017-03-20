@@ -2,9 +2,9 @@ package com.liu.laravel.ui.ViewHolder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.liu.laravel.R;
 
 import butterknife.BindView;
@@ -23,13 +23,13 @@ import butterknife.ButterKnife;
 public class TopicViewHoder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.content_title_tv)
-    TextView title;
+    public TextView title;
     @BindView(R.id.content_time_tv)
-    TextView time;
+    public TextView time;
     @BindView(R.id.content_number_tv)
-    TextView number;
+    public TextView number;
     @BindView(R.id.user_img_iv)
-    ImageView avater;
+    public SimpleDraweeView avater;
 
     public TopicViewHoder(View itemView) {
         super(itemView);

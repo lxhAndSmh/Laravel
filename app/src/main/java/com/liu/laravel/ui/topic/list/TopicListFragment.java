@@ -4,6 +4,7 @@ package com.liu.laravel.ui.topic.list;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.liu.laravel.R;
+import com.liu.laravel.bean.topic.Topic;
 import com.liu.laravel.bean.topic.TopicList;
+import com.liu.laravel.global.Constants;
+import com.liu.laravel.ui.adapter.TopicAdapter;
 import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,10 +54,14 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
     @BindView(R.id.loadAgain)
     ImageView imgLoad;
 
+    private List<Topic> topics;
+    private TopicAdapter adapter;
+    public String TYPE = Constants.Topic.EXCELLENT;
+
+    private int mPageIndex = 1;
+
     public TopicListFragment() {
         // Required empty public constructor
-        manager = new TopicListDataManager();
-        presenter = new TopicListPresenter(manager, this);
     }
 
 
@@ -60,6 +71,7 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_topic_list, container, false);
         unbinder = ButterKnife.bind(this, view);
+        initData();
         return view;
     }
 
@@ -69,19 +81,47 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
         unbinder.unbind();
     }
 
+    private void initData(){
+        manager = new TopicListDataManager();
+        presenter = new TopicListPresenter(manager, this);
+        topics = new ArrayList<>();
+        adapter = new TopicAdapter(topics);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPageIndex = 1;
+                presenter.getTopicListByForm(TYPE, mPageIndex);
+            }
+        });
+        presenter.getTopicListByForm(TYPE, mPageIndex);
+    }
+
     @Override
     public void refershTopicList(TopicList topicList) {
-
+        topics.clear();
+        if(topicList.getData() == null || topicList.getData().size() == 0){
+            rlEmpty.setVisibility(View.VISIBLE);
+            return;
+        }else {
+            rlEmpty.setVisibility(View.GONE);
+        }
+        topics.addAll(topicList.getData());
+        adapter.replaceData(topics);
     }
 
     @Override
     public void loadMoreTopicList(TopicList topicList) {
-
+        if(topicList.getData() != null && topicList.getData().size() != 0){
+            topics.addAll(topicList.getData());
+            adapter.replaceData(topics);
+        }
     }
 
     @Override
     public void setPresenter(TopicListContact.Presenter presenter) {
-
+        this.presenter = presenter;
     }
 
     @Override
@@ -96,6 +136,6 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
 
     @Override
     public void onRequestEnd() {
-
+        swipeRefresh.setRefreshing(false);
     }
 }
