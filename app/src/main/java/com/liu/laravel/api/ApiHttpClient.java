@@ -87,7 +87,7 @@ public class ApiHttpClient {
         Interceptor headerInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request.Builder builder = new Request.Builder();
+                Request.Builder builder = chain.request().newBuilder();
                 builder.addHeader("X-Client-Platform", "Android");
                 builder.addHeader("X-Client-Version", BuildConfig.VERSION_NAME);
                 builder.addHeader("X-Client-Build", String.valueOf(BuildConfig.VERSION_CODE));
@@ -120,7 +120,7 @@ public class ApiHttpClient {
                     Buffer buffer = source.buffer();
                     Charset UTF8 = Charset.forName("UTF-8");
 
-                    Logger.d("REQUEST_JSON", buffer.clone().readString(UTF8));
+                    Logger.json("REQUEST_JSON====" + buffer.clone().readString(UTF8));
                     Logger.d("REQUEST_URL", request.url());
                     return response;
                 }

@@ -27,7 +27,7 @@
             android:layout_height="@dimen/space_50"
             android:layout_marginRight="@dimen/space_8"
             fresco:placeholderImage="@color/main_bg"
-            fresco:roundedCornerRadius="5dp"
+            fresco:roundAsCircle="true"
             />
 
         <LinearLayout
@@ -63,8 +63,8 @@
 
         <TextView
             android:id="@+id/content_number_tv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:background="@drawable/tv_round"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

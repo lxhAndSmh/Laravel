@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.liu.laravel.R;
 import com.liu.laravel.bean.topic.Topic;
 import com.liu.laravel.bean.topic.TopicList;
+import com.liu.laravel.common.OnLoadMoreListener;
 import com.liu.laravel.global.Constants;
 import com.liu.laravel.ui.adapter.TopicAdapter;
 import com.orhanobut.logger.Logger;
@@ -88,6 +89,7 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
         adapter = new TopicAdapter(topics);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -96,6 +98,14 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
             }
         });
         presenter.getTopicListByForm(TYPE, mPageIndex);
+        recyclerView.addOnScrollListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mPageIndex++;
+                presenter.getTopicListByForm(TYPE, mPageIndex);
+            }
+
+        });
     }
 
     @Override
@@ -126,7 +136,9 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
 
     @Override
     public void onRequestStart() {
-
+        if(mPageIndex == 1){
+            swipeRefresh.setRefreshing(true);
+        }
     }
 
     @Override

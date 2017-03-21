@@ -69,6 +69,13 @@ public class TopicListPresenter implements TopicListContact.Presenter {
                     }
                 })
                 .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mView.onRequestStart();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<TopicList>() {
                                @Override
