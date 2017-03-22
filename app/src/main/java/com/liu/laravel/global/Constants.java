@@ -13,7 +13,7 @@ package com.liu.laravel.global;
 public class Constants {
 
     //每页请求数量
-    public static final String PAGE_NUMBER = "15";
+    public static final String PAGE_NUMBER = "10";
 
     public interface Topic {
         String EXCELLENT = "excellent";//推荐

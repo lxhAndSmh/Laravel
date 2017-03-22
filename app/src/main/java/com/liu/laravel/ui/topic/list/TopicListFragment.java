@@ -97,7 +97,7 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
                 presenter.getTopicListByForm(TYPE, mPageIndex);
             }
         });
-        presenter.getTopicListByForm(TYPE, mPageIndex);
+
         recyclerView.addOnScrollListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -105,6 +105,22 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
                 presenter.getTopicListByForm(TYPE, mPageIndex);
             }
 
+        });
+
+        getData();
+    }
+
+    public void getData(){
+        mPageIndex = 1;
+        presenter.getTopicListByForm(TYPE, mPageIndex);
+    }
+
+    private void setSwipeRefresh(final boolean isRefreshing){
+        swipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefresh.setRefreshing(isRefreshing);
+            }
         });
     }
 
@@ -137,17 +153,23 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
     @Override
     public void onRequestStart() {
         if(mPageIndex == 1){
-            swipeRefresh.setRefreshing(true);
+            setSwipeRefresh(true);
         }
     }
 
     @Override
     public void onRequestError(String errorMsg) {
-        Logger.d(TAG, "error=====" + errorMsg);
+        Logger.e(TAG, "error=====" + errorMsg);
     }
 
     @Override
     public void onRequestEnd() {
-        swipeRefresh.setRefreshing(false);
+        setSwipeRefresh(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.unsubscribe();
     }
 }

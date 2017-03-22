@@ -120,8 +120,9 @@ public class ApiHttpClient {
                     Buffer buffer = source.buffer();
                     Charset UTF8 = Charset.forName("UTF-8");
 
-                    Logger.json("REQUEST_JSON====" + buffer.clone().readString(UTF8));
-                    Logger.d("REQUEST_URL", request.url());
+                    String json = buffer.clone().readString(UTF8);
+                    Logger.json(json);
+                    Logger.d("REQUEST_URL=====" + request.url().toString());
                     return response;
                 }
             };

@@ -11,8 +11,10 @@ package com.liu.laravel.common;
  */
 
 public interface BasePresenter {
-
-    void subscribe();
-
+    /**
+     * Observable在subscribe()之后，会持有Subcriber的引用， 这个引用如果不能及时释放，将有内存泄漏的风险。
+     * 一个原则：在不再使用的时候尽快在合适的地方（例如onPasuse(),onStop(),onDestory(）等方法中)调用unsubscribe()来解除引用关系，
+     *          以避免内存泄漏的发生。调用之前可以先使用isUnsubscribed()判断一下状态
+     */
     void unsubscribe();
 }

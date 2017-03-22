@@ -3,8 +3,6 @@ package com.liu.laravel.ui.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liu.laravel.R;
+import com.liu.laravel.global.Constants;
 import com.liu.laravel.ui.topic.list.TopicListFragment;
 import com.liu.laravel.util.ToastUtils;
 
@@ -41,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.activity_drawer)
     DrawerLayout drawerLayout;
 
+    private TopicListFragment mFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,39 +62,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvLogin.setOnClickListener(this);
         imageLogout.setOnClickListener(this);
         toolbar.setNavigationIcon(R.mipmap.ic_actionbar_menu);
-        toolbar.setTitle("Laravel");
+        toolbar.setTitle("精华");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(this);
     }
 
     private void initData(){
 
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        TopicListFragment topicListFragment = new TopicListFragment();
-        transaction.add(R.id.container, topicListFragment);
-        transaction.commit();
+        mFragment = new TopicListFragment();
+        mFragment.TYPE = Constants.Topic.EXCELLENT;
+        toFragment();
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.drawer_best:
-                        ToastUtils.showShortTomast(MainActivity.this, "精华");
+                        switchFragment("精华", Constants.Topic.EXCELLENT);
                         break;
                     case R.id.drawer_vote:
-                        ToastUtils.showShortTomast(MainActivity.this, "投票");
+                        switchFragment("投票", Constants.Topic.VOTE);
                         break;
                     case R.id.drawer_newest:
-                        ToastUtils.showShortTomast(MainActivity.this, "最近");
+                        switchFragment("最近", Constants.Topic.NEWEST);
                         break;
                     case R.id.drawer_nobody:
-                        ToastUtils.showShortTomast(MainActivity.this, "零回复");
+                        switchFragment("零回复", Constants.Topic.NOBODY);
                         break;
                     case R.id.drawer_work:
-                        ToastUtils.showShortTomast(MainActivity.this, "酷工作");
+                        switchFragment("酷工作", Constants.Topic.JOBS);
                         break;
                     case R.id.drawer_wiki:
-                        ToastUtils.showShortTomast(MainActivity.this, "社区WIKI");
+                        switchFragment("社区WIKI", Constants.Topic.WIKI);
                         break;
                     case R.id.drawer_theme:
                         ToastUtils.showShortTomast(MainActivity.this, "切换主题");
@@ -142,5 +142,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return true;
+    }
+
+    private void switchFragment(String title, String type){
+        toolbar.setTitle(title);
+        mFragment.TYPE = type;
+        toFragment();
+    }
+
+    private void toFragment(){
+        if(mFragment.isAdded()){
+            mFragment.getData();
+        }else {
+            getSupportFragmentManager().beginTransaction().add(R.id.container, mFragment).commit();
+        }
     }
 }
