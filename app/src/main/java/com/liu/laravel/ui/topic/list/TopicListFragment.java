@@ -30,7 +30,7 @@ import butterknife.Unbinder;
 
 /**
 * 项目名称：TopicListFragment
-* 类描述：Topic列表fragment
+* 类描述：Topic无登录状态下的列表fragment
 * 创建人：liuxuhui
 * 创建时间：2017/3/17 18:00
 * 修改人：liuxuhui
@@ -80,6 +80,7 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        presenter.unsubscribe();
     }
 
     private void initData(){
@@ -167,9 +168,4 @@ public class TopicListFragment extends Fragment implements TopicListContact.View
         setSwipeRefresh(false);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.unsubscribe();
-    }
 }

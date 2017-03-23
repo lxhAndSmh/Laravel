@@ -2,7 +2,6 @@ package com.liu.laravel.bean.topic;
 
 import com.google.gson.annotations.SerializedName;
 import com.liu.laravel.bean.BaseModel;
-import com.liu.laravel.bean.user.User;
 import com.liu.laravel.bean.user.UserInfo;
 
 /**
@@ -40,7 +39,7 @@ public class Topic extends BaseModel {
     @SerializedName("vote_up")
     private boolean voteUp;
 
-    private User.LinksBean links;
+    private LinksBean links;
 
     private UserInfo user;
 
@@ -137,11 +136,11 @@ public class Topic extends BaseModel {
         this.voteUp = voteUp;
     }
 
-    public User.LinksBean getLinks() {
+    public LinksBean getLinks() {
         return links;
     }
 
-    public void setLinks(User.LinksBean links) {
+    public void setLinks(LinksBean links) {
         this.links = links;
     }
 
@@ -218,5 +217,40 @@ public class Topic extends BaseModel {
         }
 
     }
+
+    public static class LinksBean extends BaseModel{
+
+        @SerializedName("details_web_view")
+        private String detailsWebView;
+        @SerializedName("replies_web_view")
+        private String repliesWebView;
+        @SerializedName("web_url")
+        private String webUrl;
+
+        public String getDetailsWebView() {
+            return detailsWebView;
+        }
+
+        public void setDetailsWebView(String detailsWebView) {
+            this.detailsWebView = detailsWebView;
+        }
+
+        public String getRepliesWebView() {
+            return repliesWebView;
+        }
+
+        public void setRepliesWebView(String repliesWebView) {
+            this.repliesWebView = repliesWebView;
+        }
+
+        public String getWebUrl() {
+            return webUrl;
+        }
+
+        public void setWebUrl(String webUrl) {
+            this.webUrl = webUrl;
+        }
+    }
+
 
 }

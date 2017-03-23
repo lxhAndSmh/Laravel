@@ -1,5 +1,6 @@
 package com.liu.laravel.ui.ViewHolder;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ import butterknife.ButterKnife;
 
 public class TopicViewHoder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.item_cardview)
+    public CardView cardView;
     @BindView(R.id.content_title_tv)
     public TextView title;
     @BindView(R.id.content_time_tv)
