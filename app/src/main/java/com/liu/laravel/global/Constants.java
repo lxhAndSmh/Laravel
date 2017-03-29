@@ -28,5 +28,7 @@ public class Constants {
         String AUTH_TYPE_GUEST = "client_credentials";
         String AUTH_TYPE_USER = "login_token";
         String AUTH_TYPE_REFRESH = "refresh_token";
+        String COMMENT_URL = "comment_url";
+        String WEB_URL = "web_url";
     }
 }

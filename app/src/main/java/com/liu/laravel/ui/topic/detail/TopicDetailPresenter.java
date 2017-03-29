@@ -3,6 +3,7 @@ package com.liu.laravel.ui.topic.detail;
 import com.liu.laravel.bean.topic.Topic;
 import com.liu.laravel.bean.topic.TopicDetail;
 import com.liu.laravel.bean.user.User;
+import com.orhanobut.logger.Logger;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,6 +48,7 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
                 .subscribe(new Action1<Topic>() {
                                @Override
                                public void call(Topic topic) {
+                                   Logger.json(topic.toString());
                                    User userInfo = topic.getUser().getData();
                                    view.setTitle(userInfo);
                                    String webUrl = topic.getLinks().getDetailsWebView();

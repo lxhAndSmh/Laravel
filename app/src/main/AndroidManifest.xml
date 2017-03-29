@@ -28,7 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.topic.detail.TopicDetailActivity"></activity>
+        <activity android:name=".ui.topic.detail.TopicDetailActivity"
+            android:label="详情页"
+            />
+        <activity android:name=".ui.topic.comment.CommentActivity"
+            android:label="评论列表"
+            android:windowSoftInputMode="adjustPan"
+            ></activity>
     </application>
 
 </manifest>

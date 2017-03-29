@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_comment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.liu.laravel.ui.topic.comment.CommentActivity">
+
+    <include layout="@layout/common_toolbar"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></WebView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <include layout="@layout/view_line"></include>
+
+    <LinearLayout
+        android:id="@+id/bottom_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:paddingTop="@dimen/space_4"
+        android:paddingBottom="@dimen/space_4"
+        android:gravity="center_vertical">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/comment_edt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:hint="请输入评论"
+            android:background="@android:color/white"
+            android:textColorHint="@color/text_content"
+            android:textSize="@dimen/textSize_14"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingTop="@dimen/space_6"
+            android:paddingBottom="@dimen/space_6"/>
+
+        <ImageView
+            android:id="@+id/send_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:src="@mipmap/ic_send_default"
+            android:contentDescription="@string/app_name"/>
+
+    </LinearLayout>
+</LinearLayout>
