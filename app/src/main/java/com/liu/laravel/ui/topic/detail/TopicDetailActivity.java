@@ -20,6 +20,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.liu.laravel.R;
 import com.liu.laravel.api.ApiHttpClient;
 import com.liu.laravel.bean.user.User;
+import com.liu.laravel.ui.topic.comment.CommentActivity;
 import com.liu.laravel.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 
@@ -28,6 +29,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TopicDetailActivity extends AppCompatActivity implements TopicDetailContract.View{
 
@@ -53,7 +55,8 @@ public class TopicDetailActivity extends AppCompatActivity implements TopicDetai
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    private double topicId;
+    private int topicId;
+    private String commentUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,19 @@ public class TopicDetailActivity extends AppCompatActivity implements TopicDetai
         mPresenter = new TopicDetailPresenter(mManager, this);
         mPresenter.getTopicDetailData(topicId);
         Logger.d("topicId====" + topicId);
+    }
+
+    @OnClick({R.id.point_tv, R.id.comment_tv})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.point_tv:
+                break;
+            case R.id.comment_tv:
+                startActivity(CommentActivity.newIntent(TopicDetailActivity.this, commentUrl, topicId));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -139,6 +155,11 @@ public class TopicDetailActivity extends AppCompatActivity implements TopicDetai
     }
 
     @Override
+    public void setCommentUrl(String commentUrl) {
+        this.commentUrl = commentUrl;
+    }
+
+    @Override
     public void setPresenter(TopicDetailContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
@@ -150,7 +171,7 @@ public class TopicDetailActivity extends AppCompatActivity implements TopicDetai
 
     @Override
     public void onRequestError(String errorMsg) {
-
+        Logger.e(errorMsg);
     }
 
     @Override

@@ -28,7 +28,14 @@ public class Constants {
         String AUTH_TYPE_GUEST = "client_credentials";
         String AUTH_TYPE_USER = "login_token";
         String AUTH_TYPE_REFRESH = "refresh_token";
+    }
+
+    public interface Key{
+        String TOPIC_ID = "topic_id";
         String COMMENT_URL = "comment_url";
+        String USER_DATA = "user_data";
+        String IS_LOGIN = "is_login";
         String WEB_URL = "web_url";
+        String TOKEN = "token";
     }
 }

@@ -53,6 +53,7 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
                                    view.setTitle(userInfo);
                                    String webUrl = topic.getLinks().getDetailsWebView();
                                    view.setWebUrl(webUrl);
+                                   view.setCommentUrl(topic.getLinks().getRepliesWebView());
                                    view.setVoteNumber(String.valueOf(topic.getVoteCount()));
                                    view.setCommentNumber(String.valueOf(topic.getReplyCount()));
                                }

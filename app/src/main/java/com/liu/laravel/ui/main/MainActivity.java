@@ -1,5 +1,7 @@
 package com.liu.laravel.ui.main;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -15,8 +17,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.liu.laravel.R;
+import com.liu.laravel.bean.user.User;
+import com.liu.laravel.bean.user.UserInfo;
 import com.liu.laravel.global.Constants;
+import com.liu.laravel.global.UserConstant;
+import com.liu.laravel.ui.login.LoginActivity;
 import com.liu.laravel.ui.topic.list.TopicListFragment;
 import com.liu.laravel.util.ToastUtils;
 
@@ -26,13 +33,14 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final static String TAG = MainActivity.class.getSimpleName();
+    private static final int REQUEST_CODE = 0x10;
 
     private RelativeLayout rlUser;
     private TextView tvName;
     private TextView tvEmail;
     private TextView tvLogin;
     private ImageView imageLogout;
-    private ImageView imageAvater;
+    private SimpleDraweeView imageAvater;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.navigation)
@@ -41,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DrawerLayout drawerLayout;
 
     private TopicListFragment mFragment;
+
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvName = (TextView) view.findViewById(R.id.drawer_header_name);
         tvEmail = (TextView) view.findViewById(R.id.drawer_header_email);
         tvLogin = (TextView) view.findViewById(R.id.drawer_header_login);
-        imageAvater = (ImageView) view.findViewById(R.id.drawer_header_avatar);
+        imageAvater = (SimpleDraweeView) view.findViewById(R.id.drawer_header_avatar);
         imageLogout = (ImageView) view.findViewById(R.id.drawer_header_logout);
         tvLogin.setOnClickListener(this);
         imageLogout.setOnClickListener(this);
@@ -68,6 +78,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initData(){
+
+        if(UserConstant.newInstance(this).isLogin()){
+            user = UserConstant.newInstance(this).getUserData();
+            imageAvater.setImageURI(user.getAvatar());
+            tvName.setText(user.getName());
+            tvEmail.setText(user.getEmail());
+
+            rlUser.setVisibility(View.VISIBLE);
+            tvLogin.setVisibility(View.GONE);
+        }
 
         mFragment = new TopicListFragment();
         mFragment.TYPE = Constants.Topic.EXCELLENT;
@@ -113,10 +133,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.drawer_header_login:
-                ToastUtils.showShortTomast(MainActivity.this, "登录");
+                startActivityForResult(LoginActivity.newIntent(MainActivity.this), REQUEST_CODE);
                 break;
             case R.id.drawer_header_logout:
-                ToastUtils.showShortTomast(MainActivity.this, "登出");
+                UserConstant.newInstance(this).logout();
+                imageAvater.setImageURI(Uri.parse("res://com.liu.laravel/" + R.color.main_bg));
+
+                rlUser.setVisibility(View.GONE);
+                tvLogin.setVisibility(View.VISIBLE);
+                ToastUtils.showShortTomast(MainActivity.this, "退出成功");
                 break;
             default:
                 drawerLayout.openDrawer(Gravity.LEFT);
@@ -156,5 +181,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else {
             getSupportFragmentManager().beginTransaction().add(R.id.container, mFragment).commit();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+            UserInfo userInfo = (UserInfo) data.getExtras().getSerializable(Constants.Key.USER_DATA);
+            User user = userInfo.getData();
+            imageAvater.setImageURI(user.getAvatar());
+            tvName.setText(user.getName());
+            tvEmail.setText(user.getEmail());
+
+            rlUser.setVisibility(View.VISIBLE);
+            tvLogin.setVisibility(View.GONE);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 权限操作回调
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

@@ -33,6 +33,8 @@ public interface TopicDetailContract {
         void setCommentNumber(String commentNumber);
 
         void setVoteNumber(String voteNumber);
+
+        void setCommentUrl(String commentUrl);
     }
 
     interface Presenter extends BasePresenter{

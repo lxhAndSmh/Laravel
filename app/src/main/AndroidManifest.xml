@@ -33,7 +33,7 @@
             />
         <activity android:name=".ui.topic.comment.CommentActivity"
             android:label="评论列表"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustResize"
             ></activity>
     </application>
 

@@ -38,6 +38,8 @@ public class ApiHttpClient {
 
     private static TokenApi tokenApi;
 
+    private static UserApi userApi;
+
     private static String mToken = "";
 
     public static String getmToken() {
@@ -63,6 +65,10 @@ public class ApiHttpClient {
 
     public TopicApi getTopicApi(){
         return topicApi == null ? configRetrofit(TopicApi.class, false) : topicApi;
+    }
+
+    public UserApi getUserApi(){
+        return userApi == null ? configRetrofit(UserApi.class, true) : userApi;
     }
 
     private <T> T configRetrofit(Class<T> service, boolean isNeedToken){
