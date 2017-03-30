@@ -39,7 +39,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(final Context context, String userName, String loginTocken) {
-        dataManager.getLoginTokem(context, userName, loginTocken)
+        subscription = dataManager.getLoginTokem(context, userName, loginTocken)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -80,7 +80,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void unsubscribe() {
 
-        if (!subscription.isUnsubscribed()) {
+        if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
     }

@@ -35,6 +35,9 @@
             android:label="评论列表"
             android:windowSoftInputMode="adjustResize"
             ></activity>
+        <activity android:name=".ui.login.LoginActivity"
+            android:label="登录页"
+            ></activity>
     </application>
 
 </manifest>

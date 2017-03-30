@@ -20,6 +20,7 @@ import com.liu.laravel.R;
 import com.liu.laravel.api.ApiHttpClient;
 import com.liu.laravel.bean.topic.TopicReply;
 import com.liu.laravel.global.Constants;
+import com.liu.laravel.global.UserConstant;
 import com.liu.laravel.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 
@@ -91,7 +92,11 @@ public class CommentActivity extends AppCompatActivity implements CommentContrac
     }
 
     @OnClick(R.id.send_iv)
-    public void sendComment(ImageView sendIv){
+    public void sendComment(){
+        if(!UserConstant.newInstance(this).isLogin()){
+            ToastUtils.showShortTomast(this, "请先登录");
+            return;
+        }
         String body = commentEdt.getText().toString();
         if(TextUtils.isEmpty(body)){
             ToastUtils.showShortTomast(this, "评论内容不能为空");
