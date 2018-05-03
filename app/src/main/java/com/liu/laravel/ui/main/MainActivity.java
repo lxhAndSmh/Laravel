@@ -23,6 +23,7 @@ import com.liu.laravel.bean.user.User;
 import com.liu.laravel.bean.user.UserInfo;
 import com.liu.laravel.global.Constants;
 import com.liu.laravel.global.UserConstant;
+import com.liu.laravel.ui.jsons.MapJsonActivity;
 import com.liu.laravel.ui.login.LoginActivity;
 import com.liu.laravel.ui.topic.list.TopicListFragment;
 import com.liu.laravel.util.ToastUtils;
@@ -160,10 +161,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.main_setting:
-                ToastUtils.showShortTomast(MainActivity.this, "设置");
+//                ToastUtils.showShortTomast(MainActivity.this, "设置");
+                Intent intent = new Intent(this, MapJsonActivity.class);
+                startActivity(intent);
                 break;
             case R.id.main_about:
                 ToastUtils.showShortTomast(MainActivity.this, "关于");
+                break;
+            default:
                 break;
         }
         return true;

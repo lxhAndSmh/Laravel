@@ -24,8 +24,8 @@ public class CommentPresenter implements CommentContract.Presenter {
 
     private CommentContract.DataManager dataManager;
 
-    private static CommentContract.View view;
-    private static Subscription subscription;
+    private CommentContract.View view;
+    private Subscription subscription;
 
     public CommentPresenter(CommentContract.DataManager dataManager, CommentContract.View view) {
         this.dataManager = dataManager;

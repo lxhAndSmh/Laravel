@@ -2,7 +2,10 @@ package com.liu.laravel.api;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.liu.laravel.BuildConfig;
+import com.liu.laravel.util.JsonUtils;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
@@ -40,6 +43,8 @@ public class ApiHttpClient {
 
     private static UserApi userApi;
 
+    private static MapJsonApi mapJsonApi;
+
     private static String mToken = "";
 
     public static String getmToken() {
@@ -60,23 +65,36 @@ public class ApiHttpClient {
     }
 
     public TokenApi getTokenApi(){
-        return tokenApi == null ? configRetrofit(TokenApi.class, true) : tokenApi;
+        return tokenApi == null ? configRetrofit(TokenApi.class, true, false) : tokenApi;
     }
 
     public TopicApi getTopicApi(){
-        return topicApi == null ? configRetrofit(TopicApi.class, false) : topicApi;
+        return topicApi == null ? configRetrofit(TopicApi.class, false, false) : topicApi;
     }
 
     public UserApi getUserApi(){
-        return userApi == null ? configRetrofit(UserApi.class, true) : userApi;
+        return userApi == null ? configRetrofit(UserApi.class, true, false) : userApi;
     }
 
-    private <T> T configRetrofit(Class<T> service, boolean isNeedToken){
+    public MapJsonApi getMapJsonApi() {
+        return mapJsonApi == null ? configRetrofit(MapJsonApi.class, false, true) : mapJsonApi;
+    }
+
+    private <T> T configRetrofit(Class<T> service, boolean isNeedToken, boolean isTestUrl){
         Retrofit.Builder builder = new Retrofit.Builder();
-        builder.baseUrl(BuildConfig.API_BASE_URL)
-                .client(configClient(isNeedToken))
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+        GsonConverterFactory gsonConverterFactory;
+        if(isTestUrl) {
+            builder.baseUrl(BuildConfig.TEST_MAP_URL);
+            gsonConverterFactory = GsonConverterFactory.create(JsonUtils.getMapGson());
+
+        }else {
+            builder.baseUrl(BuildConfig.API_BASE_URL);
+            gsonConverterFactory = GsonConverterFactory.create();
+        }
+
+        builder.client(configClient(isNeedToken))
+            .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
         Retrofit retrofit = builder.build();
         return retrofit.create(service);
     }

@@ -25,8 +25,8 @@ import rx.schedulers.Schedulers;
 public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     private Subscription subscription;
-    private static TopicDetailContract.DataManager detailManager;
-    private static TopicDetailContract.View view;
+    private TopicDetailContract.DataManager detailManager;
+    private TopicDetailContract.View view;
 
     public TopicDetailPresenter(TopicDetailContract.DataManager detailManager, TopicDetailContract.View view) {
         this.detailManager = detailManager;

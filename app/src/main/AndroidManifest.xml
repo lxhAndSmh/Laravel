@@ -28,16 +28,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.topic.detail.TopicDetailActivity"
-            android:label="详情页"
-            />
-        <activity android:name=".ui.topic.comment.CommentActivity"
+        <activity
+            android:name=".ui.topic.detail.TopicDetailActivity"
+            android:label="详情页" />
+        <activity
+            android:name=".ui.topic.comment.CommentActivity"
             android:label="评论列表"
-            android:windowSoftInputMode="adjustResize"
-            ></activity>
-        <activity android:name=".ui.login.LoginActivity"
-            android:label="登录页"
-            ></activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:label="登录页" />
+        <activity android:name=".ui.jsons.MapJsonActivity"></activity>
     </application>
 
 </manifest>

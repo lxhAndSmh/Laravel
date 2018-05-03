@@ -13,6 +13,7 @@ android {
         buildConfigField("String", "CLIENT_ID", "\"${CLIENT_ID}\"")
         buildConfigField("String", "CLIENT_SECRET", "\"${CLIENT_SECRET}\"")
         buildConfigField("String", "API_BASE_URL", "\"${API_BASE_URL}\"")
+        buildConfigField("String", "TEST_MAP_URL", "\"${TEST_MAP_URL}\"");
 
         println("CLIENT_ID ========== " + "\"${CLIENT_ID}\"")
         println("CLIENT_SECRET ========== " + "\"${CLIENT_SECRET}\"")
